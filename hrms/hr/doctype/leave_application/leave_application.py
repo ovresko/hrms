@@ -32,6 +32,7 @@ from hrms.hr.utils import (
 	share_doc_with_approver,
 	validate_active_employee,
 )
+from typing import Dict, List, Optional, Tuple
 
 
 class LeaveDayBlockedError(frappe.ValidationError):
@@ -59,7 +60,7 @@ class LeaveAcrossAllocationsError(frappe.ValidationError):
 
 
 from frappe.model.document import Document
-
+from datetime import datetime as dt
 
 class LeaveApplication(Document):
 	def get_feed(self):
@@ -80,6 +81,27 @@ class LeaveApplication(Document):
 		if frappe.db.get_value("Leave Type", self.leave_type, "is_optional_leave"):
 			self.validate_optional_leave()
 		self.validate_applicable_after()
+		self.valdiate_calcule()
+
+	def valdiate_calcule(self):
+		self.exercice = 0
+		self.reliquat = 0
+		self.reste = 0
+		self.total_droits = 0
+		if self.leave_type == "Congé annuel":
+			fromd = frappe.utils.getdate(self.from_date)
+			tod = frappe.utils.getdate(self.to_date)
+			from_date = dt(year=fromd.year-1,month=7,day=1)
+			to_date = dt(year=fromd.year,month=6,day=30)
+
+			new_allocation, expired_leaves, carry_forwarded_leaves = get_allocated_and_expired_leaves(from_date, to_date, self.employee, "Congé annuel")
+			leaves_taken = (get_leaves_for_period(self.employee, "Congé annuel", from_date, to_date) * -1) or 0
+			
+			self.exercice = new_allocation
+			self.reliquat = carry_forwarded_leaves - leaves_taken
+			self.total_droits = self.reliquat+self.exercice
+			self.reste = self.total_droits - self.total_leave_days
+
 
 	def on_update(self):
 		if self.status == "Open" and self.docstatus < 1:
@@ -846,7 +868,7 @@ def get_leave_details(employee, date):
 		}
 
 	# is used in set query
-	lwp = frappe.get_list("Leave Type", filters={"is_lwp": 1}, pluck="name")
+	lwp = frappe.get_list("Leave Type", or_filters={"is_lwp": 1,"allow_over_allocation":1}, pluck="name")
 
 	return {
 		"leave_allocation": leave_allocation,
@@ -1363,3 +1385,67 @@ def get_leave_approver(employee):
 		)
 
 	return leave_approver
+
+
+
+def get_allocated_and_expired_leaves(
+	from_date: str, to_date: str, employee: str, leave_type: str
+) -> Tuple[float, float, float]:
+	new_allocation = 0
+	expired_leaves = 0
+	carry_forwarded_leaves = 0
+
+	records = get_leave_ledger_entries(from_date, to_date, employee, leave_type)
+
+	for record in records:
+		# new allocation records with `is_expired=1` are created when leave expires
+		# these new records should not be considered, else it leads to negative leave balance
+		if record.is_expired:
+			continue
+
+		if record.to_date < getdate(to_date):
+			# leave allocations ending before to_date, reduce leaves taken within that period
+			# since they are already used, they won't expire
+			expired_leaves += record.leaves
+			expired_leaves += get_leaves_for_period(employee, leave_type, record.from_date, record.to_date)
+
+		if record.from_date >= getdate(from_date):
+			if record.is_carry_forward:
+				carry_forwarded_leaves += record.leaves
+			else:
+				new_allocation += record.leaves
+
+	return new_allocation, expired_leaves, carry_forwarded_leaves
+
+
+def get_leave_ledger_entries(
+	from_date: str, to_date: str, employee: str, leave_type: str
+) -> List[Dict]:
+	ledger = frappe.qb.DocType("Leave Ledger Entry")
+	records = (
+		frappe.qb.from_(ledger)
+		.select(
+			ledger.employee,
+			ledger.leave_type,
+			ledger.from_date,
+			ledger.to_date,
+			ledger.leaves,
+			ledger.transaction_name,
+			ledger.transaction_type,
+			ledger.is_carry_forward,
+			ledger.is_expired,
+		)
+		.where(
+			(ledger.docstatus == 1)
+			& (ledger.transaction_type == "Leave Allocation")
+			& (ledger.employee == employee)
+			& (ledger.leave_type == leave_type)
+			& (
+				(ledger.from_date[from_date:to_date])
+				| (ledger.to_date[from_date:to_date])
+				| ((ledger.from_date < from_date) & (ledger.to_date > to_date))
+			)
+		)
+	).run(as_dict=True)
+
+	return records

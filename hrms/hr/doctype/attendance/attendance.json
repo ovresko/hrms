@@ -99,7 +99,8 @@
    "mandatory_depends_on": "eval:in_list([\"On Leave\", \"Half Day\"], doc.status)",
    "oldfieldname": "leave_type",
    "oldfieldtype": "Link",
-   "options": "Leave Type"
+   "options": "Leave Type",
+   "search_index": 1
   },
   {
    "fieldname": "leave_application",
@@ -107,7 +108,8 @@
    "label": "Leave Application",
    "no_copy": 1,
    "options": "Leave Application",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break0",
@@ -122,7 +124,8 @@
    "label": "Attendance Date",
    "oldfieldname": "attendance_date",
    "oldfieldtype": "Date",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "employee.company",
@@ -155,7 +158,8 @@
    "fieldtype": "Link",
    "label": "Attendance Request",
    "options": "Attendance Request",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "amended_from",
@@ -171,13 +175,15 @@
    "default": "0",
    "fieldname": "late_entry",
    "fieldtype": "Check",
-   "label": "Late Entry"
+   "label": "Late Entry",
+   "search_index": 1
   },
   {
    "default": "0",
    "fieldname": "early_exit",
    "fieldtype": "Check",
-   "label": "Early Exit"
+   "label": "Early Exit",
+   "search_index": 1
   },
   {
    "fieldname": "details_section",
@@ -260,6 +266,10 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+<<<<<<< HEAD
  "title_field": "employee_name",
  "track_changes": 1
+=======
+ "title_field": "employee_name"
+>>>>>>> change done upuntil jan24
 }

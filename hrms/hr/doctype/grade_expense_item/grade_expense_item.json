@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-06-06 16:21:24.751378",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "expense_claim_type",
+  "territory",
+  "fixed",
+  "amount",
+  "euro"
+ ],
+ "fields": [
+  {
+   "fieldname": "expense_claim_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Expense Claim Type",
+   "options": "Expense Claim Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Territory",
+   "options": "Territory",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "euro",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Euro"
+  },
+  {
+   "default": "0",
+   "fieldname": "fixed",
+   "fieldtype": "Check",
+   "label": "Fixed"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-11-12 10:29:49.172980",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Grade Expense Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

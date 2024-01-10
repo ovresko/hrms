@@ -1,0 +1,66 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-06-19 14:24:04.191362",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employeur",
+  "embauche",
+  "d\u00e9part",
+  "postes_occup\u00e9es",
+  "motif_de_d\u00e9part",
+  "salaire_mensuel"
+ ],
+ "fields": [
+  {
+   "fieldname": "employeur",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employeur"
+  },
+  {
+   "fieldname": "embauche",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Embauche"
+  },
+  {
+   "fieldname": "d\u00e9part",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "D\u00e9part"
+  },
+  {
+   "fieldname": "postes_occup\u00e9es",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Postes occup\u00e9es"
+  },
+  {
+   "fieldname": "motif_de_d\u00e9part",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Motif de d\u00e9part"
+  },
+  {
+   "fieldname": "salaire_mensuel",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Salaire mensuel"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-06-19 14:24:04.191362",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Candidature Job",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

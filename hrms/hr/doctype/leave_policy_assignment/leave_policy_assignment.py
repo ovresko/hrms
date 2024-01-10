@@ -256,7 +256,10 @@ def calculate_pro_rated_leaves(
 	actual_period = date_diff(period_end_date, date_of_joining) + 1
 	complete_period = date_diff(period_end_date, period_start_date) + 1
 
-	leaves *= actual_period / complete_period
+	#leaves *= actual_period / complete_period
+	diff = actual_period / complete_period
+	if diff < 0.5:
+		leaves = 0
 
 	if is_earned_leave:
 		return flt(leaves, precision)

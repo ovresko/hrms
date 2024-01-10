@@ -1,0 +1,610 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{mom} {prenom}",
+ "creation": "2023-06-19 14:05:57.674609",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "identit\u00e9_section",
+  "nom",
+  "prenom",
+  "date_de_naissance",
+  "lieu_de_naissance",
+  "fils_pere",
+  "fils_mere",
+  "groupe_sanguin",
+  "situation__familiale",
+  "column_break_c3uxs",
+  "nationalit\u00e9",
+  "cin",
+  "nss",
+  "tel",
+  "mobile",
+  "adresse_\u00e9lectronique",
+  "adresse_personnelle",
+  "section_break_azhfy",
+  "urgence",
+  "urgence_tel",
+  "maladie",
+  "service_militaire_section",
+  "service_militaire",
+  "formation",
+  "primaire_column",
+  "etablissement_primaire",
+  "p\u00e9riode_primaire",
+  "moyen_column",
+  "etablissement_moyen",
+  "p\u00e9riode_moyen",
+  "secondaire_column",
+  "etablissement_secondaire",
+  "p\u00e9riode_secondaire",
+  "dipl\u00f4me_obtenu_secondaire",
+  "sp\u00e9cialit\u00e9_secondaire",
+  "sup\u00e9rieur_column",
+  "etablissement_sup\u00e9rieur",
+  "p\u00e9riode_sup\u00e9rieur",
+  "dipl\u00f4me_obtenu_sup\u00e9rieur",
+  "sp\u00e9cialit\u00e9_sup\u00e9rieur",
+  "stages_et_s\u00e9minaires_section",
+  "stage",
+  "connaissances__de_langues_section",
+  "arabe_lu",
+  "arabe_parl\u00e9",
+  "arabe_ecrit",
+  "fran\u00e7ais_column",
+  "fran\u00e7ais_lu",
+  "fran\u00e7ais_parl\u00e9",
+  "fran\u00e7ais_ecrit",
+  "anglais_column",
+  "anglais_lu",
+  "anglais_parl\u00e9",
+  "anglais_ecrit",
+  "autre_langues_column",
+  "lang1",
+  "lu",
+  "parl\u00e9",
+  "ecrit",
+  "autrelang",
+  "lang2",
+  "lu2",
+  "parle2",
+  "ecrit2",
+  "connaissance_en_informatique_section",
+  "word",
+  "excel",
+  "access",
+  "power_point",
+  "internet",
+  "autre_\u00e0_pr\u00e9ciser",
+  "pr\u00e9ciser_autre",
+  "column_break_xunkx",
+  "has_pc",
+  "exp\u00e9rience_professionnelle_section",
+  "candidature_job",
+  "aspirations_professionnelles_section",
+  "asp1",
+  "asp2",
+  "asp3",
+  "salary",
+  "autres_section",
+  "autre1",
+  "type_cand",
+  "rep_type_cand",
+  "section_break_f9b0i",
+  "proche",
+  "section_break_4uh7y",
+  "informations"
+ ],
+ "fields": [
+  {
+   "fieldname": "identit\u00e9_section",
+   "fieldtype": "Section Break",
+   "label": "Identit\u00e9"
+  },
+  {
+   "fieldname": "nom",
+   "fieldtype": "Data",
+   "label": "Nom"
+  },
+  {
+   "fieldname": "prenom",
+   "fieldtype": "Data",
+   "label": "Pr\u00e9nom"
+  },
+  {
+   "fieldname": "date_de_naissance",
+   "fieldtype": "Date",
+   "label": "Date de naissance"
+  },
+  {
+   "fieldname": "lieu_de_naissance",
+   "fieldtype": "Data",
+   "label": "Lieu de naissance"
+  },
+  {
+   "fieldname": "fils_pere",
+   "fieldtype": "Data",
+   "label": "Fils (lie) de (pere)"
+  },
+  {
+   "fieldname": "fils_mere",
+   "fieldtype": "Data",
+   "label": "Fils (lie) de (mere)"
+  },
+  {
+   "fieldname": "groupe_sanguin",
+   "fieldtype": "Data",
+   "label": "Groupe sanguin"
+  },
+  {
+   "fieldname": "situation__familiale",
+   "fieldtype": "Select",
+   "label": "Situation  Familiale",
+   "options": "C\u00e9libataire\nMari\u00e9\nDivorc\u00e9\nVeuf"
+  },
+  {
+   "fieldname": "column_break_c3uxs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "nationalit\u00e9",
+   "fieldtype": "Link",
+   "label": "Nationalit\u00e9",
+   "options": "Country"
+  },
+  {
+   "fieldname": "cin",
+   "fieldtype": "Data",
+   "label": "N\u00b0 de la C.I.N"
+  },
+  {
+   "fieldname": "nss",
+   "fieldtype": "Data",
+   "label": "N\u00b0 de s\u00e9curit\u00e9  sociale"
+  },
+  {
+   "fieldname": "tel",
+   "fieldtype": "Phone",
+   "label": "Tel. Domicile"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Phone",
+   "label": "Mobile"
+  },
+  {
+   "fieldname": "adresse_\u00e9lectronique",
+   "fieldtype": "Data",
+   "label": "Adresse \u00e9lectronique"
+  },
+  {
+   "fieldname": "adresse_personnelle",
+   "fieldtype": "Long Text",
+   "label": "Adresse personnelle"
+  },
+  {
+   "fieldname": "section_break_azhfy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "urgence",
+   "fieldtype": "Small Text",
+   "label": "Personne \u00e0 contacter en cas d\u2019urgence"
+  },
+  {
+   "fieldname": "urgence_tel",
+   "fieldtype": "Phone",
+   "label": "Num\u00e9ro de t\u00e9l\u00e9phone"
+  },
+  {
+   "fieldname": "maladie",
+   "fieldtype": "Small Text",
+   "label": "Maladie chronique \u00e0 d\u00e9clarer"
+  },
+  {
+   "fieldname": "service_militaire_section",
+   "fieldtype": "Section Break",
+   "label": "Service Militaire"
+  },
+  {
+   "fieldname": "service_militaire",
+   "fieldtype": "Select",
+   "label": "Service Militaire",
+   "options": "Dispense\nR\u00e9form\u00e9\nApte non incorporable\nEffectue"
+  },
+  {
+   "fieldname": "formation",
+   "fieldtype": "Section Break",
+   "label": "Formation G\u00e9n\u00e9rale"
+  },
+  {
+   "fieldname": "primaire_column",
+   "fieldtype": "Column Break",
+   "label": "Primaire"
+  },
+  {
+   "fieldname": "etablissement_primaire",
+   "fieldtype": "Data",
+   "label": "Etablissement Primaire"
+  },
+  {
+   "fieldname": "p\u00e9riode_primaire",
+   "fieldtype": "Data",
+   "label": "P\u00e9riode Primaire"
+  },
+  {
+   "fieldname": "moyen_column",
+   "fieldtype": "Column Break",
+   "label": "Moyen"
+  },
+  {
+   "fieldname": "etablissement_moyen",
+   "fieldtype": "Data",
+   "label": "Etablissement Moyen"
+  },
+  {
+   "fieldname": "p\u00e9riode_moyen",
+   "fieldtype": "Data",
+   "label": "P\u00e9riode Moyen"
+  },
+  {
+   "fieldname": "secondaire_column",
+   "fieldtype": "Column Break",
+   "label": "Secondaire"
+  },
+  {
+   "fieldname": "etablissement_secondaire",
+   "fieldtype": "Data",
+   "label": "Etablissement Secondaire"
+  },
+  {
+   "fieldname": "p\u00e9riode_secondaire",
+   "fieldtype": "Data",
+   "label": "P\u00e9riode Secondaire"
+  },
+  {
+   "fieldname": "dipl\u00f4me_obtenu_secondaire",
+   "fieldtype": "Data",
+   "label": "Dipl\u00f4me Obtenu Secondaire"
+  },
+  {
+   "fieldname": "sp\u00e9cialit\u00e9_secondaire",
+   "fieldtype": "Data",
+   "label": "Sp\u00e9cialit\u00e9 Secondaire"
+  },
+  {
+   "fieldname": "sup\u00e9rieur_column",
+   "fieldtype": "Column Break",
+   "label": "Sup\u00e9rieur"
+  },
+  {
+   "fieldname": "etablissement_sup\u00e9rieur",
+   "fieldtype": "Data",
+   "label": "Etablissement Sup\u00e9rieur"
+  },
+  {
+   "fieldname": "p\u00e9riode_sup\u00e9rieur",
+   "fieldtype": "Data",
+   "label": "P\u00e9riode Sup\u00e9rieur"
+  },
+  {
+   "fieldname": "dipl\u00f4me_obtenu_sup\u00e9rieur",
+   "fieldtype": "Data",
+   "label": "Dipl\u00f4me Obtenu Sup\u00e9rieur"
+  },
+  {
+   "fieldname": "sp\u00e9cialit\u00e9_sup\u00e9rieur",
+   "fieldtype": "Data",
+   "label": "Sp\u00e9cialit\u00e9 Sup\u00e9rieur"
+  },
+  {
+   "fieldname": "stages_et_s\u00e9minaires_section",
+   "fieldtype": "Section Break",
+   "label": "Stages et S\u00e9minaires"
+  },
+  {
+   "fieldname": "stage",
+   "fieldtype": "Table",
+   "label": "Stages et S\u00e9minaires",
+   "options": "Stage Item"
+  },
+  {
+   "description": "Attribuez des notes de 0 \u00e0 10 suivant le niveau de maitrise de la langue",
+   "fieldname": "connaissances__de_langues_section",
+   "fieldtype": "Section Break",
+   "label": "Connaissances  de langues"
+  },
+  {
+   "fieldname": "arabe_lu",
+   "fieldtype": "Select",
+   "label": "Arabe Lu",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "arabe_parl\u00e9",
+   "fieldtype": "Select",
+   "label": "Arabe Parl\u00e9",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "arabe_ecrit",
+   "fieldtype": "Select",
+   "label": "Arabe Ecrit",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "fran\u00e7ais_column",
+   "fieldtype": "Column Break",
+   "label": "Fran\u00e7ais"
+  },
+  {
+   "fieldname": "fran\u00e7ais_lu",
+   "fieldtype": "Select",
+   "label": "Fran\u00e7ais Lu",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "fran\u00e7ais_parl\u00e9",
+   "fieldtype": "Select",
+   "label": "Fran\u00e7ais Parl\u00e9",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "fran\u00e7ais_ecrit",
+   "fieldtype": "Select",
+   "label": "Fran\u00e7ais Ecrit",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "anglais_column",
+   "fieldtype": "Column Break",
+   "label": "Anglais"
+  },
+  {
+   "fieldname": "anglais_lu",
+   "fieldtype": "Select",
+   "label": "Anglais Lu",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "anglais_parl\u00e9",
+   "fieldtype": "Select",
+   "label": "Anglais Parl\u00e9",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "anglais_ecrit",
+   "fieldtype": "Select",
+   "label": "Anglais Ecrit",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "autre_langues_column",
+   "fieldtype": "Column Break",
+   "label": "Autre langues"
+  },
+  {
+   "fieldname": "lang1",
+   "fieldtype": "Link",
+   "label": "Langue",
+   "options": "Language"
+  },
+  {
+   "fieldname": "lu",
+   "fieldtype": "Select",
+   "label": "Lu",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "parl\u00e9",
+   "fieldtype": "Select",
+   "label": "Parl\u00e9",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "ecrit",
+   "fieldtype": "Select",
+   "label": "Ecrit",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "autrelang",
+   "fieldtype": "Column Break",
+   "label": "Autre langues"
+  },
+  {
+   "fieldname": "lang2",
+   "fieldtype": "Link",
+   "label": "Langue",
+   "options": "Language"
+  },
+  {
+   "fieldname": "lu2",
+   "fieldtype": "Select",
+   "label": "Lu",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "parle2",
+   "fieldtype": "Select",
+   "label": "Parl\u00e9",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "ecrit2",
+   "fieldtype": "Select",
+   "label": "Ecrit",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  },
+  {
+   "fieldname": "connaissance_en_informatique_section",
+   "fieldtype": "Section Break",
+   "label": "Connaissance en Informatique "
+  },
+  {
+   "fieldname": "word",
+   "fieldtype": "Select",
+   "label": "WORD",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "excel",
+   "fieldtype": "Select",
+   "label": "EXCEL",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "access",
+   "fieldtype": "Select",
+   "label": "ACCESS",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "power_point",
+   "fieldtype": "Select",
+   "label": "POWER POINT",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "internet",
+   "fieldtype": "Select",
+   "label": "Internet",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "autre_\u00e0_pr\u00e9ciser",
+   "fieldtype": "Select",
+   "label": "Autre (\u00e0 pr\u00e9ciser)",
+   "options": "D\u00e9butant\nQuelques notions pratiques\nMaitrise\nExpertise"
+  },
+  {
+   "fieldname": "pr\u00e9ciser_autre",
+   "fieldtype": "Data",
+   "label": "Pr\u00e9ciser Autre"
+  },
+  {
+   "fieldname": "column_break_xunkx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_pc",
+   "fieldtype": "Check",
+   "label": "Avez-vous un ordinateur  personnel ?"
+  },
+  {
+   "fieldname": "exp\u00e9rience_professionnelle_section",
+   "fieldtype": "Read Only",
+   "label": "Exp\u00e9rience Professionnelle"
+  },
+  {
+   "fieldname": "candidature_job",
+   "fieldtype": "Table",
+   "label": "Exp\u00e9rience Professionnelle",
+   "options": "Candidature Job"
+  },
+  {
+   "fieldname": "aspirations_professionnelles_section",
+   "fieldtype": "Section Break",
+   "label": "Aspirations Professionnelles"
+  },
+  {
+   "fieldname": "asp1",
+   "fieldtype": "Long Text",
+   "label": "Que connaissez-vous d'lCOSNET\u00a0?"
+  },
+  {
+   "fieldname": "asp2",
+   "fieldtype": "Long Text",
+   "label": "Quelles sont les raisons qui vous ont motiv\u00e9 \u00e0 postuler \u00e0 ICOSNET ?"
+  },
+  {
+   "fieldname": "asp3",
+   "fieldtype": "Long Text",
+   "label": "Quelle fonction  souhaitez-vous  exercer ? Pourquoi ?"
+  },
+  {
+   "fieldname": "salary",
+   "fieldtype": "Currency",
+   "label": "Quelle r\u00e9mun\u00e9ration Mensuelle  Net souhaitez-vous  recevoir  (En DZD) ?"
+  },
+  {
+   "fieldname": "autres_section",
+   "fieldtype": "Section Break",
+   "label": "Autres"
+  },
+  {
+   "fieldname": "autre1",
+   "fieldtype": "Long Text",
+   "label": "Avez-vous  d'autres  occupations ?  Si oui lesquelles ?"
+  },
+  {
+   "fieldname": "type_cand",
+   "fieldtype": "Select",
+   "label": "Votre candidature est une",
+   "options": "Candidature spontan\u00e9e\nR\u00e9ponse \u00e0 une offre d\u2019emploi\nCandidature recommand\u00e9e, si oui par qui\nAutres, \u00e0 pr\u00e9ciser"
+  },
+  {
+   "fieldname": "rep_type_cand",
+   "fieldtype": "Small Text",
+   "label": "R\u00e9ponse"
+  },
+  {
+   "fieldname": "section_break_f9b0i",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "proche",
+   "fieldtype": "Data",
+   "label": "Avez-vous un proche faisant partie du personnel d'lCOSNET ?"
+  },
+  {
+   "fieldname": "section_break_4uh7y",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "informations",
+   "fieldtype": "Long Text",
+   "label": "Veuillez indiquer  ci-dessous les informations que vous estimes \u00eatre utiles pour compl\u00e9ter votre dossier de candidature"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-06-19 14:37:30.982058",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Fiche Candidature",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Visiteur",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
