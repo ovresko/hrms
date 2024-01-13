@@ -266,10 +266,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
-<<<<<<< HEAD
  "title_field": "employee_name",
  "track_changes": 1
-=======
- "title_field": "employee_name"
->>>>>>> change done upuntil jan24
 }
