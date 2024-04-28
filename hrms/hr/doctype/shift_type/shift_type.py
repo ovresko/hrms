@@ -25,6 +25,39 @@ EMPLOYEE_CHUNK_SIZE = 50
 
 
 class ShiftType(Document):
+		
+	@frappe.whitelist()
+	def assign_shift_assignment(self,start,end):
+		if not start or not end :
+			frappe.throw("Dates are obligatoire")
+		start = getdate(start)
+		end = getdate(end)
+		if start > end:
+			frappe.throw("Date debut > fin")
+
+		employees = frappe.db.get_all("Employee", filters={"status": "Active"}, pluck="name")
+		cnt = 0
+		for emp in employees:
+			try:
+				sa = frappe.get_doc({
+					"doctype": "Shift Assignment",
+					"employee":emp,
+					"shift_type": self.name,
+					"status": "Active",
+					"start_date":start,
+					"end_date":end
+				})
+				sa.save()
+				sa.submit()
+				cnt = cnt+1
+			except:
+				pass
+   
+		return "{cnt} affectations enregistrees!".format(cnt=cnt)
+
+
+      
+  
 	@frappe.whitelist()
 	def process_auto_attendance(self):
 		if (

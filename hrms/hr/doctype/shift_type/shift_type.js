@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Shift Type', {
-	refresh: function(frm) {
+	refresh: function (frm) {
 		frm.add_custom_button(
 			__('Mark Attendance'),
 			() => {
@@ -31,5 +31,43 @@ frappe.ui.form.on('Shift Type', {
 				});
 			}
 		);
+
+		frm.add_custom_button(
+			__("Apply Shift Assignment"),
+			() => {
+				var me = this;
+				var fields = [
+					{ fieldtype: "Date", fieldname: "start", label: __("From Date"),reqd: 1 },
+					{ fieldtype: "Date", fieldname: "end", label: __("To Date"),reqd: 1 }
+				]
+
+				const dialog  = new frappe.ui.Dialog({
+					title: __("Apply Shift Assignment"),
+					fields: fields,
+					primary_action: function () {
+						// var data =dialog.get_values();
+						// frappe.msgprint(
+						// 	dialog.fields_dict.start.value
+						// );
+						// return
+						frm.call("assign_shift_assignment",{
+								start: dialog.fields_dict.start.value,
+								end: dialog.fields_dict.end.value,
+							},
+							(r) => {
+								frappe.msgprint(
+									r.message
+								);
+								d.hide();
+								me.frm.reload_doc();
+							},
+						);
+					},
+					primary_action_label: __("Create"),
+				});
+				dialog.show();
+
+			})
+
 	}
 });

@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-25 00:00:51.930724",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "attendance_from_bio",
+  "attendance_from_rfid",
+  "bio_ip_1",
+  "bio_ip_2",
+  "bio_ip_3",
+  "bio_ip_4"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "attendance_from_bio",
+   "fieldtype": "Check",
+   "label": "Attendance from bio"
+  },
+  {
+   "default": "0",
+   "fieldname": "attendance_from_rfid",
+   "fieldtype": "Check",
+   "label": "Attendance from rfid"
+  },
+  {
+   "fieldname": "bio_ip_1",
+   "fieldtype": "Data",
+   "label": "BIO IP 1"
+  },
+  {
+   "fieldname": "bio_ip_2",
+   "fieldtype": "Data",
+   "label": "BIO IP 2"
+  },
+  {
+   "fieldname": "bio_ip_3",
+   "fieldtype": "Data",
+   "label": "BIO IP 3"
+  },
+  {
+   "fieldname": "bio_ip_4",
+   "fieldtype": "Data",
+   "label": "BIO IP 4"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-03-25 00:47:17.488546",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Checking Hardware",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

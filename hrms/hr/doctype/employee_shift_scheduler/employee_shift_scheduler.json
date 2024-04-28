@@ -10,6 +10,7 @@
  "field_order": [
   "start_date",
   "end_date",
+  "holiday",
   "active",
   "shift_scheduler_item"
  ],
@@ -40,11 +41,18 @@
    "fieldtype": "Table",
    "label": "Shift Scheduler Item",
    "options": "Employee Shift Scheduler Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "holiday",
+   "fieldtype": "Link",
+   "label": "Holiday",
+   "options": "Holiday List"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-17 11:04:10.679263",
+ "modified": "2024-01-21 14:45:22.407780",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Shift Scheduler",
