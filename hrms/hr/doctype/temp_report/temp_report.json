@@ -1,0 +1,139 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:AF-{original_supervisor}-{replace_supervisor}-{from}",
+ "creation": "2024-05-21 16:29:58.195675",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from",
+  "to",
+  "original_supervisor",
+  "replace_supervisor",
+  "change_assignment",
+  "column_break_flmcd",
+  "naming_series",
+  "amended_from",
+  "active",
+  "executed",
+  "linked",
+  "leave_application",
+  "employees"
+ ],
+ "fields": [
+  {
+   "fieldname": "from",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To"
+  },
+  {
+   "fetch_from": "employee.reports_to",
+   "fieldname": "original_supervisor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Original Supervisor",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "replace_supervisor",
+   "fieldtype": "Link",
+   "label": "Replace Supervisor",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "change_assignment",
+   "fieldtype": "Check",
+   "label": "Change Current Assignments"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "AFT-"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Temp Report",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_flmcd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "1",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "executed",
+   "fieldtype": "Check",
+   "label": "Executed"
+  },
+  {
+   "fieldname": "linked",
+   "fieldtype": "Link",
+   "label": "Linked",
+   "options": "Temp Report"
+  },
+  {
+   "fieldname": "leave_application",
+   "fieldtype": "Link",
+   "label": "Leave Application",
+   "options": "Leave Application"
+  },
+  {
+   "fieldname": "employees",
+   "fieldtype": "Small Text",
+   "label": "Employees"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-08 17:40:57.171085",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Temp Report",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

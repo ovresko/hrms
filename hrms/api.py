@@ -6,8 +6,201 @@ from dateutil import parser
 from frappe.utils import cint
 from frappe import _
 from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employee,is_holiday
+from datetime import datetime as dt
+from frappe.utils.nestedset import rebuild_tree
+
+from datetime import timedelta as td
+from frappe.desk.doctype.notification_log.notification_log import (
+	enqueue_create_notification,
+	get_title,
+	get_title_html,
+)
+
+def tc_inser(check):
+    try:
+        check.insert()
+    except Exception as e:
+        logging.info(e)
+        
+        
+@frappe.whitelist()
+def process_tasks(*args,**kwargs):
+    # delay
+    # send_notif("ovresko@gmail.com","test message","email content")
+    today = dt.today().date()
+    emptyProjects = frappe.db.sql(""" SELECT p.* ,COUNT(t.name) AS task_count FROM tabProject p LEFT JOIN tabTask t ON p.name = t.project  where p.status="Open" GROUP BY p.name; """,as_dict=True)
+    if emptyProjects:
+        for em in emptyProjects:
+            creation = em.expected_start_date
+            if creation and today>(creation+td(days=6)):
+                assigned = frappe.get_all(
+                    "ToDo",
+                    fields=["name", "allocated_to", "description", "status"],
+                    filters={
+                        "reference_type": "Project",
+                        "reference_name": em.name,
+                        "status": ("not in", ("Cancelled", "Closed")),
+                        "allocated_to": ("is", "set"),
+                    },
+                )
+                #em.owner
+                assignedUsers = [a['allocated_to'] for a in assigned]
+                projUsers = [a['user'] for a in (em.users or [])]
+                users = list(set(projUsers+assignedUsers+[em.owner]))  
+                for u in users:
+                    # send_notif(u,subject,msg)
+                    check = frappe.get_doc({
+                        'doctype': 'Task Check',
+                        "type": "empty_project",
+                        "reference_type":"Project",
+                        "task":em.name,
+                        "user":u
+                    })
+                    tc_inser(check)
 
 
+
+
+    tasks = frappe.db.get_list("Task", {"status":["not in",["Completed","Cancelled"]]},["*"],  page_length=99999)
+    for task in tasks:
+        print(task.name)
+        assigned = frappe.get_all(
+            "ToDo",
+            fields=["name", "allocated_to", "description", "status"],
+            filters={
+                "reference_type": "Task",
+                "reference_name": task.name,
+                "status": ("not in", ("Cancelled", "Closed")),
+                "allocated_to": ("is", "set"),
+            },
+        )
+        
+        assigned = list(set([a.allocated_to for a in assigned]))
+        for assign in assigned:
+            try:
+                process_task(assign,task)
+            except Exception as e:
+                logging.exception(e)
+
+def process_task(userid,task):
+    today = dt.today().date()
+    print(type(task.exp_start_date))
+    employee = frappe.get_doc("Employee",{"user_id":userid})
+    superior1 = employee.reports_to
+    superior2 = frappe.db.get_value('Employee', employee.name, 'reports_to')
+    print(employee)
+    print(superior1)
+    print(superior2)
+
+    # half_period
+    # empty_project
+    # 2_days_before
+    # delay
+    # new_task
+    
+    # 'doctype': 'Task Check',
+    # "type": "empty_project",
+    # "reference_type":"Project",
+    # "task":em.name,
+    # "user":u
+
+    # half_period  
+    allusers = [userid]
+    if superior1:
+        allusers.append(superior1)
+    if superior2:
+        allusers.append(superior2)
+        
+   
+    if task.exp_end_date and task.exp_start_date and task.progress<50:
+        period = (task.exp_end_date - task.exp_start_date).days
+        if period>3:
+            half = task.exp_start_date + td(days=int(period/2))
+            if today>=half:
+                for u in allusers:
+                    check = frappe.get_doc({
+                        'doctype': 'Task Check',
+                        "reference_type":"Task",
+                        "type": "half_period",
+                        "task":task.name,
+                        "user":u
+                    })
+                    tc_inser(check)
+
+
+    # 2_days_before
+    if   task.exp_end_date :
+        deadline = task.exp_end_date - td(days=2)
+        if deadline<=today:
+            for u in allusers:
+                check = frappe.get_doc({
+                    'doctype': 'Task Check',
+                    "reference_type":"Task",
+                    "type": "2_days_before",
+                    "task":task.name,
+                    "user":u
+                })
+                tc_inser(check)
+            
+
+    # delay
+    if task.modified and task.status=="Open" and task.priority!="Low" :
+        
+        delayed = (dt.today() - task.modified ).days
+        if delayed > 6:
+           for u in allusers:
+                check = frappe.get_doc({
+                    'doctype': 'Task Check',
+                    "reference_type":"Task",
+                    "type": "delay",
+                    "task":task.name,
+                    "user":u
+                })
+                tc_inser(check)
+           
+
+    
+    # new_task
+#     new_task = frappe.db.exists("Task Check", {"type": "new_task","task":task.name,"user":userid})
+#     if not new_task and task.modified and task.status=="Open" and task.priority!="Low" :
+        
+#         delayed = (dt.today() - task.modified ).days
+#         if delayed > 6:
+#             subject = f"L'évolution de tache {task.name}"
+#             msg=f"""
+#     <p>Bonjour,</p>
+#     <p>Pourriez-vous nous tenir informés de l'avancement de votre tâche, s'il vous plaît ? <br> 
+#     Tâche: {task.name} / {task.subject}<br> 
+#     Project <strong>{task.project}</strong> <br> 
+#     Assignée à <strong>{userid}</strong><br> 
+ 
+#     <p>Merci de votre attention et de votre collaboration.</p>
+#     <p>Cordialement,<br>
+# """
+#             send_notif(userid,subject,msg)
+#             if superior1:
+#                 send_notif(superior1,subject,msg)
+#             if superior2:
+#                 send_notif(superior2,subject,msg)
+#             check = frappe.get_doc({
+#                 'doctype': 'Task Check',
+#                 "type": "delay",
+#                 "task":task.name,
+#                 "user":userid
+#             })
+#             check.insert()
+
+def send_notif(userid,subject,email_content):
+    print("sending notif")
+    frappe.sendmail(recipients=[userid], subject=subject, message=email_content)
+
+@frappe.whitelist()
+def reorder_tasks(doc, status):
+    if doc.custom_index:
+        exists = max = frappe.db.sql("select name from `tabTask` where custom_index=%(custom_index)s and project=%(project)s and name!=%(name)s",{"custom_index":doc.custom_index,"project":doc.project,"name":doc.name},as_dict=1)
+        if exists:
+            #exist = exists[0]
+            frappe.db.sql("update `tabTask` set custom_index=IFNULL(custom_index,0)+1 where  custom_index>=%(custom_index)s and project=%(project)s and name!=%(name)s",{"custom_index":doc.custom_index,"project":doc.project,"name":doc.name},as_dict=1)
 
 @frappe.whitelist()
 def assign_shift_assignment(*args,**kwargs):
@@ -282,3 +475,97 @@ def mark_presence(log_names,employee,attendance_date,attendance_status,working_h
             .where(EmployeeCheckin.name.isin(log_names))
         ).run()
     #return attendance
+
+@frappe.whitelist()
+def process_temp_reports(*args,**kwargs):
+    today = datetime.datetime.today()
+    reports = frappe.get_all(
+        "Temp Report",
+        fields=["name"],
+        filters=[
+            ["active",'=', 1],
+            ["executed",'=', 0],
+            ["from", "<=", today]
+        ],
+        order_by='`from` asc'
+    )
+    logging.warn(f"found {len(reports)} reports")
+    for _report in reports:
+        try:
+            report = frappe.get_doc("Temp Report",_report.name)
+            original_supervisor = report.original_supervisor
+            replace_supervisor = report.replace_supervisor
+            change_assignment = report.change_assignment
+            logging.warn(f"handeling report {report.name}")
+            
+            if report.employees == None:
+                report.employees=""
+            employees = []
+            if not report.employees and not report.linked:
+                employees = frappe.get_all(
+                    "Employee",
+                    fields=["name","reports_to","employee_name"],
+                    filters=[
+                        ["reports_to",'=', original_supervisor],
+                        ["status","=","Active"]
+                    ],
+                )
+            elif report.employees :
+                for emp in report.employees.splitlines():
+                    if emp:
+                        logging.warn(f"fetch link emp {emp}")
+                        employees.append(frappe.get_doc("Employee",emp))
+                
+            logging.warn(f"employees {len(employees)}")
+            
+            affected = []
+            
+            for employee in employees:
+                try:
+                    logging.warn(f"updating {employee.employee_name}")
+                    if report.linked:
+                        linked_original_emp = frappe.db.get_value("Temp Report",report.linked,"replace_supervisor")
+                        #reports_to = frappe.db.get_value("Employee",employee.name,"reports_to")
+                        if employee.reports_to and employee.reports_to != linked_original_emp:
+                            logging.warn(f"default report manualy to changed {report.name}")
+                            continue
+                            
+                    if replace_supervisor == employee.name:
+                        #reports_to = frappe.db.get_value("Employee",employee.name,"reports_to")
+                        logging.warn(f"replace supervisor is same as employee {report.name}")
+                    else:
+                        frappe.db.set_value("Employee",employee.name,"reports_to",replace_supervisor)
+                        affected.append(employee.name)
+                        
+                    if change_assignment:
+                        logging.warn(f"changing assignmenets for {employee.employee_name}")
+                        #
+                except Exception as e:
+                    logging.exception(e)
+            report.employees = "\n".join(affected)
+            report.executed = 1
+            report.save(ignore_permissions=True)
+            frappe.db.commit()
+                    
+            rebuild_tree("Employee")
+           
+            
+            # frappe.db.set_value("Temp Report",report.name,"employees",affected)
+            # frappe.db.set_value("Temp Report",report.name,"executed",1)
+            
+            if report.to and affected:
+                logging.warn(f"setting end report to {report.to}")    
+                frappe.get_doc({
+                    "doctype":"Temp Report",
+                    "from":report.to,
+                    "original_supervisor":replace_supervisor,
+                    "replace_supervisor":original_supervisor,
+                    "change_assignment":change_assignment,
+                    "active":1,
+                    "executed":0,
+                    "employees":"\n".join(affected),
+                    "linked":report.name
+                }).insert(ignore_permissions=True)
+                
+        except Exception as e:
+            logging.exception(e)

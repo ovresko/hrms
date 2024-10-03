@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:BDC-{#####}",
+ "creation": "2024-09-18 15:32:08.537783",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date_start",
+  "date_fin",
+  "leave_type",
+  "section_break_nyrfv",
+  "reason",
+  "column_break_yi33w",
+  "employees",
+  "section_break_xigla",
+  "success",
+  "column_break_xxkoc",
+  "failed",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "date_start",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date Start",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_fin",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date Fin",
+   "reqd": 1
+  },
+  {
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Leave Type",
+   "options": "Leave Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Reason",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_xigla",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "success",
+   "fieldtype": "Small Text",
+   "label": "Success"
+  },
+  {
+   "fieldname": "column_break_xxkoc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "failed",
+   "fieldtype": "Small Text",
+   "label": "Failed"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Bulk Leave Application",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_nyrfv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_yi33w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employees",
+   "fieldtype": "Small Text",
+   "label": "Employees"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-18 15:44:03.315151",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Bulk Leave Application",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Leave Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

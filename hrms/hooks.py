@@ -170,7 +170,12 @@ doc_events = {
 	"Project": {
 		"validate": "hrms.controllers.employee_boarding_controller.update_employee_boarding_status"
 	},
-	"Task": {"on_update": "hrms.controllers.employee_boarding_controller.update_task"},
+	"Task": {
+        "on_update": [
+            "hrms.controllers.employee_boarding_controller.update_task",
+            "hrms.api.reorder_tasks",
+            ],
+        },
 }
 
 # Scheduled Tasks
@@ -182,10 +187,12 @@ scheduler_events = {
 	],
 	"hourly": [
 		"hrms.hr.doctype.daily_work_summary_group.daily_work_summary_group.trigger_emails",
+        # "hrms.api.process_tasks"
 	],
 	"hourly_long": [
 		"hrms.api.process_shift_scheduler",
 		"hrms.hr.doctype.shift_type.shift_type.process_auto_attendance_for_all_shifts",
+		"hrms.api.process_temp_reports",
 	],
 	"daily": [
 		"hrms.controllers.employee_reminders.send_birthday_reminders",

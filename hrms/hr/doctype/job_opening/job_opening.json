@@ -1,7 +1,8 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "field:route",
+ "allow_rename": 1,
+ "autoname": "hash",
  "creation": "2013-01-15 16:13:36",
  "description": "Description of a Job Opening",
  "doctype": "DocType",
@@ -101,8 +102,7 @@
    "depends_on": "publish",
    "fieldname": "route",
    "fieldtype": "Data",
-   "label": "Route",
-   "unique": 1
+   "label": "Route"
   },
   {
    "description": "Job profile, qualifications required etc.",
@@ -186,11 +186,11 @@
  "icon": "fa fa-bookmark",
  "idx": 1,
  "links": [],
- "modified": "2023-09-14 16:50:39.316079",
+ "modified": "2024-09-08 12:35:33.369263",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Opening",
- "naming_rule": "By fieldname",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {

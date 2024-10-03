@@ -68,6 +68,7 @@ class Interview(Document):
 			SELECT interview.name
 			FROM `tabInterview` as interview
 			INNER JOIN `tabInterview Detail` as detail
+			ON detail.parent = interview.name
 			WHERE
 				interview.scheduled_on = %s and interview.name != %s and interview.docstatus != 2
 				and (interview.job_applicant = %s or detail.interviewer IN %s) and
@@ -89,8 +90,9 @@ class Interview(Document):
 		)
 
 		if overlaps:
-			overlapping_details = _("Interview overlaps with {0}").format(
-				get_link_to_form("Interview", overlaps[0][0])
+			overlapping_details = _("Interview overlaps with {0} {1}").format(
+				get_link_to_form("Interview", overlaps[0][0]),
+				interviewers
 			)
 			frappe.throw(overlapping_details, title=_("Overlap"))
 

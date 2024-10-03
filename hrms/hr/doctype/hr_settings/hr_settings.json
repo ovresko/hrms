@@ -46,7 +46,9 @@
   "employee_exit_section",
   "exit_questionnaire_web_form",
   "column_break_34",
-  "exit_questionnaire_notification_template"
+  "exit_questionnaire_notification_template",
+  "max_exit_permit_count",
+  "max_exit_permit_hours"
  ],
  "fields": [
   {
@@ -296,13 +298,23 @@
    "fieldname": "shift_settings_section",
    "fieldtype": "Section Break",
    "label": "Shift Settings"
+  },
+  {
+   "fieldname": "max_exit_permit_count",
+   "fieldtype": "Int",
+   "label": "Max Exit Permit Count"
+  },
+  {
+   "fieldname": "max_exit_permit_hours",
+   "fieldtype": "Float",
+   "label": "Max Exit Permit Hours"
   }
  ],
  "icon": "fa fa-cog",
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-12-28 23:07:36.317223",
+ "modified": "2024-09-23 11:21:17.639838",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",

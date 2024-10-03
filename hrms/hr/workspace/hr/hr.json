@@ -5,7 +5,7 @@
    "label": "Hiring vs Attrition Count"
   }
  ],
- "content": "[{\"id\":\"grI7BRZvN7\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Hiring vs Attrition Count\",\"col\":12}},{\"id\":\"HVWfQc7fj7\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"bGPVuXkzRl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee\",\"col\":3}},{\"id\":\"u2QyZzfp-I\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Application\",\"col\":3}},{\"id\":\"zT2nIR3I6p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"HR Dashboard\",\"col\":3}},{\"id\":\"_uxZq9AGCp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Recruitment Dashboard\",\"col\":3}},{\"id\":\"hfxumomYGI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Lifecycle Dashboard\",\"col\":3}},{\"id\":\"Yo4ZrLFr5V\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Dashboard\",\"col\":3}},{\"id\":\"LiZ7iw36YZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Claims Dashboard\",\"col\":3}},{\"id\":\"KLjAQo6eGp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Autorisation D'Absence Et Sortie\",\"col\":3}},{\"id\":\"vP4HJHuMTU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"8PVZGtU4wp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"nWqWQcncaj\",\"type\":\"card\",\"data\":{\"card_name\":\"Setup\",\"col\":4}},{\"id\":\"9ZgtyE9wlm\",\"type\":\"card\",\"data\":{\"card_name\":\"Employee\",\"col\":4}},{\"id\":\"8WqE48BBtu\",\"type\":\"card\",\"data\":{\"card_name\":\"Cong\u00e9s\",\"col\":4}},{\"id\":\"pf9nTQs5CZ\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"id\":\"SegpHZHUgU\",\"type\":\"card\",\"data\":{\"card_name\":\"Attendance\",\"col\":4}},{\"id\":\"TLdHodElq6\",\"type\":\"card\",\"data\":{\"card_name\":\"Expense Claim\",\"col\":4}},{\"id\":\"Sh-uWkzxTe\",\"type\":\"card\",\"data\":{\"card_name\":\"Key Reports\",\"col\":4}},{\"id\":\"vWV5nnj1xe\",\"type\":\"card\",\"data\":{\"card_name\":\"Other Reports\",\"col\":4}}]",
+ "content": "[{\"id\":\"grI7BRZvN7\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Hiring vs Attrition Count\",\"col\":12}},{\"id\":\"HVWfQc7fj7\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"bGPVuXkzRl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee\",\"col\":3}},{\"id\":\"u2QyZzfp-I\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Application\",\"col\":3}},{\"id\":\"zT2nIR3I6p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"HR Dashboard\",\"col\":3}},{\"id\":\"_uxZq9AGCp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Recruitment Dashboard\",\"col\":3}},{\"id\":\"hfxumomYGI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Lifecycle Dashboard\",\"col\":3}},{\"id\":\"Yo4ZrLFr5V\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Attendance Dashboard\",\"col\":3}},{\"id\":\"LiZ7iw36YZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Claims Dashboard\",\"col\":3}},{\"id\":\"KLjAQo6eGp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Autorisation D'Absence Et Sortie\",\"col\":3}},{\"id\":\"vP4HJHuMTU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"X4m0YMn0zU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Demande De Cong\u00e9S\",\"col\":3}},{\"id\":\"8PVZGtU4wp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"nWqWQcncaj\",\"type\":\"card\",\"data\":{\"card_name\":\"Setup\",\"col\":4}},{\"id\":\"9ZgtyE9wlm\",\"type\":\"card\",\"data\":{\"card_name\":\"Employ\u00e9\",\"col\":4}},{\"id\":\"8WqE48BBtu\",\"type\":\"card\",\"data\":{\"card_name\":\"Cong\u00e9s\",\"col\":4}},{\"id\":\"pf9nTQs5CZ\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"id\":\"SegpHZHUgU\",\"type\":\"card\",\"data\":{\"card_name\":\"Attendance\",\"col\":4}},{\"id\":\"TLdHodElq6\",\"type\":\"card\",\"data\":{\"card_name\":\"Expense Claim\",\"col\":4}},{\"id\":\"Sh-uWkzxTe\",\"type\":\"card\",\"data\":{\"card_name\":\"Key Reports\",\"col\":4}},{\"id\":\"vWV5nnj1xe\",\"type\":\"card\",\"data\":{\"card_name\":\"Other Reports\",\"col\":4}}]",
  "creation": "2020-03-02 15:48:58.322521",
  "custom_blocks": [],
  "docstatus": 0,
@@ -55,44 +55,6 @@
    "link_count": 0,
    "link_to": "team-updates",
    "link_type": "Page",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee",
-   "link_count": 3,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee",
-   "link_count": 0,
-   "link_to": "Employee",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee Group",
-   "link_count": 0,
-   "link_to": "Employee Group",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee Grade",
-   "link_count": 0,
-   "link_to": "Employee Grade",
-   "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   },
@@ -395,10 +357,59 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Employ\u00e9",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Employ\u00e9",
+   "link_count": 0,
+   "link_to": "Employee",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Groupe d'employ\u00e9s",
+   "link_count": 0,
+   "link_to": "Employee Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Echelon des employ\u00e9s",
+   "link_count": 0,
+   "link_to": "Employee Grade",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Demande de d\u00e9placement",
+   "link_count": 0,
+   "link_to": "Travel Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2024-01-08 12:08:51.089210",
- "modified_by": "Administrator",
+ "modified": "2024-09-29 11:38:43.887505",
+ "modified_by": "merouane.mehdi@icosnet.com",
  "module": "HR",
  "name": "HR",
  "number_cards": [],
@@ -423,6 +434,14 @@
    "link_to": "Human Resource",
    "stats_filter": "{\n    \"status\": \"Open\"\n}",
    "type": "Dashboard"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Demande De Cong\u00e9S",
+   "link_to": "Leave Application",
+   "stats_filter": "[]",
+   "type": "DocType"
   },
   {
    "color": "Grey",
