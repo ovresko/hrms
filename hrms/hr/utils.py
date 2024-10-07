@@ -230,7 +230,7 @@ def throw_overlap_error(doc, exists_for, overlap_doc, from_date, to_date):
 		_("A {0} exists between {1} and {2} (").format(
 			doc.doctype, formatdate(from_date), formatdate(to_date)
 		)
-		+ """ <b><a href="/app/Form/{0}/{1}">{1}</a></b>""".format(doc.doctype, overlap_doc)
+		+ f""" <b><a href="/app/Form/{doc.doctype}/{overlap_doc}">{overlap_doc}</a></b>"""
 		+ _(") for {0}").format(exists_for)
 	)
 	frappe.throw(msg)
@@ -248,9 +248,7 @@ def validate_duplicate_exemption_for_payroll_period(doctype, docname, payroll_pe
 	)
 	if existing_record:
 		frappe.throw(
-			_("{0} already exists for employee {1} and period {2}").format(
-				doctype, employee, payroll_period
-			),
+			_("{0} already exists for employee {1} and period {2}").format(doctype, employee, payroll_period),
 			DuplicateDeclarationError,
 		)
 
@@ -411,6 +409,7 @@ def update_previous_leave_allocation(allocation, annual_allocation, e_leave_type
 		allocation.add_comment(comment_type="Info", text=text)
 
 
+@frappe.whitelist()
 def get_monthly_earned_leave(
 	date_of_joining,
 	annual_leaves,
@@ -515,15 +514,24 @@ def check_effective_date(from_date, today, frequency, allocate_on_day):
 
 
 def get_salary_assignments(employee, payroll_period):
-	start_date, end_date = frappe.db.get_value(
-		"Payroll Period", payroll_period, ["start_date", "end_date"]
-	)
-	assignments = frappe.db.get_all(
+	start_date, end_date = frappe.db.get_value("Payroll Period", payroll_period, ["start_date", "end_date"])
+	assignments = frappe.get_all(
 		"Salary Structure Assignment",
 		filters={"employee": employee, "docstatus": 1, "from_date": ["between", (start_date, end_date)]},
 		fields=["*"],
 		order_by="from_date",
 	)
+
+	if not assignments:
+		# if no assignments found for the given period
+		# get the last one assigned before the period that is still active
+		assignments = frappe.get_all(
+			"Salary Structure Assignment",
+			filters={"employee": employee, "docstatus": 1, "from_date": ["<=", start_date]},
+			fields=["*"],
+			order_by="from_date desc",
+			limit=1,
+		)
 
 	return assignments
 
@@ -569,9 +577,7 @@ def get_holiday_dates_for_employee(employee, start_date, end_date):
 	return [cstr(h.holiday_date) for h in holidays]
 
 
-def get_holidays_for_employee(
-	employee, start_date, end_date, raise_exception=True, only_non_weekly=False
-):
+def get_holidays_for_employee(employee, start_date, end_date, raise_exception=True, only_non_weekly=False):
 	"""Get Holidays for a given employee
 
 	`employee` (str)
@@ -671,7 +677,7 @@ def share_doc_with_approver(doc, user):
 
 
 def validate_active_employee(employee, method=None):
-	if isinstance(employee, (dict, Document)):
+	if isinstance(employee, dict | Document):
 		employee = employee.get("employee")
 
 	if employee and frappe.db.get_value("Employee", employee, "status") == "Inactive":
@@ -725,9 +731,7 @@ def get_matching_queries(
 	queries = []
 	if transaction.withdrawal > 0:
 		if "expense_claim" in document_types:
-			ec_amount_matching = get_ec_matching_query(
-				bank_account, company, exact_match, from_date, to_date
-			)
+			ec_amount_matching = get_ec_matching_query(bank_account, company, exact_match, from_date, to_date)
 			queries.extend([ec_amount_matching])
 
 	return queries
@@ -748,7 +752,6 @@ def get_ec_matching_query(bank_account, company, exact_match, from_date=None, to
 	filter_by_date = ""
 	if from_date and to_date:
 		filter_by_date = f"AND posting_date BETWEEN '{from_date}' AND '{to_date}'"
-		order_by = "posting_date"
 
 	return f"""
 		SELECT

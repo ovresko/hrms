@@ -41,14 +41,18 @@ def set_defaults():
 	from hrms.payroll.doctype.salary_slip.test_salary_slip import make_holiday_list
 
 	make_holiday_list("Salary Slip Test Holiday List")
-	frappe.db.set_value(
-		"Company", "_Test Company", "default_holiday_list", "Salary Slip Test Holiday List"
-	)
+	frappe.db.set_value("Company", "_Test Company", "default_holiday_list", "Salary Slip Test Holiday List")
 
 
-def get_first_sunday(holiday_list="Salary Slip Test Holiday List", for_date=None):
+def get_first_sunday(holiday_list="Salary Slip Test Holiday List", for_date=None, find_after_for_date=False):
 	date = for_date or getdate()
 	month_start_date = get_first_day(date)
+
+	if find_after_for_date:
+		# explictly find first sunday after for_date
+		# useful when DOJ is after the month start
+		month_start_date = date
+
 	month_end_date = get_last_day(date)
 	first_sunday = frappe.db.sql(
 		"""
@@ -84,7 +88,7 @@ def add_date_to_holiday_list(date: str, holiday_list: str) -> None:
 	holiday_list.save()
 
 
-def create_company(name: str = "_Test Company"):
+def create_company(name: str = "_Test Company", is_group: 0 | 1 = 0, parent_company: str | None = None):
 	if frappe.db.exists("Company", name):
 		return frappe.get_doc("Company", name)
 
@@ -94,6 +98,8 @@ def create_company(name: str = "_Test Company"):
 			"company_name": name,
 			"default_currency": "INR",
 			"country": "India",
+			"is_group": is_group,
+			"parent_company": parent_company,
 		}
 	).insert()
 

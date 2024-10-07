@@ -17,6 +17,7 @@
   "to_date",
   "half_day",
   "half_day_date",
+  "include_holidays",
   "reason_section",
   "reason",
   "column_break_4",
@@ -120,6 +121,12 @@
    "options": "Attendance Request",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "include_holidays",
+   "fieldtype": "Check",
+   "label": "Include Holidays"
   }
  ],
  "is_submittable": 1,

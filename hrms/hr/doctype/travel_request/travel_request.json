@@ -18,6 +18,7 @@
   "employee_name",
   "cell_number",
   "prefered_email",
+  "company",
   "column_break_7",
   "date_of_birth",
   "personal_id_type",
@@ -220,11 +221,19 @@
    "label": "Series",
    "options": "{####}/DRH-OM/{YYYY}",
    "reqd": 1
+  },
+  {
+   "fetch_from": "employee.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-29 11:27:55.318125",
+ "modified": "2024-05-24 17:09:09.480838",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Travel Request",
