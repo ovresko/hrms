@@ -82,7 +82,7 @@ class TravelRequest(Document):
 			old_status = doc.status
 
 			if old_status != status:
-				doc.db_set({"status": status, "travel_request": self.name})
+				doc.db_set({"status": status, "custom_travel_request": self.name})
 				text = _("changed the status from {0} to {1} via Travel Request").format(
 					frappe.bold(old_status), frappe.bold(status)
 				)
