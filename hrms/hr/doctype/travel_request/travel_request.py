@@ -103,7 +103,7 @@ class TravelRequest(Document):
 			doc.employee = self.employee
 			doc.attendance_date = date
 			#doc.company = self.company
-			doc.travel_request = self.name
+			doc.custom_travel_request = self.name
 			doc.status = status
 			doc.insert(ignore_permissions=True)
 			doc.submit()
