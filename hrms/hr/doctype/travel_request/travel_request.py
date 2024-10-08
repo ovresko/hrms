@@ -14,6 +14,8 @@ from erpnext.setup.doctype.employee.employee import is_holiday
 class TravelRequest(Document):
 	def validate(self):
 		validate_active_employee(self.employee)
+		if len(self.itinerary)<=0:
+			frappe.throw("Itinéraire est obligatoire")
 		self.custom_leave_date = min([get_datetime(i.departure_date) for i in self.itinerary])
 		self.custom_return_date = max([get_datetime(i.return_date) for i in self.itinerary])
 
@@ -111,7 +113,7 @@ class TravelRequest(Document):
 			"Attendance",
 			{
 				"employee": self.employee,
-				"attendance_date": attendance_date,
+				"attendance_date": getdate(attendance_date),
 				"docstatus": ("!=", 2),
 			},
 		)
