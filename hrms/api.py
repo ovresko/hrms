@@ -575,11 +575,11 @@ def process_temp_reports(*args,**kwargs):
 def process_late_entries(*args,**kwargs):
     logging.warning("process_late_entries")
     today = datetime.datetime.now()
-    if today.day!=21:
-        logging.warning(f"day not 21")
+    if today.day!=20:
+        logging.warning(f"day not 20")
         return
         
-    start = datetime.datetime(year=today.year,month=today.month,day=21) - datetime.timedelta(days=30)
+    start = datetime.datetime(year=today.year,month=today.month,day=20) - datetime.timedelta(days=30)
     employees = frappe.get_all(
                     "Employee",
                     fields=["name","reports_to","employee_name"],
@@ -608,7 +608,7 @@ def process_late_entries(*args,**kwargs):
         stop = False
         for shift_name in shifts:
             start_time = frappe.get_value("Shift Type", shift_name,"start_time")
-            #sStart = start_time + datetime.timedelta(minutes=120) 
+            start_time = start_time + datetime.timedelta(minutes=15)
             shift_attendances = [a for a in attendances if a.shift==shift_name and a.in_time]
             logging.warning(f"shift_attendances for {employee.name}: {len(shift_attendances)} shift_name {shift_name}")
             
@@ -624,23 +624,28 @@ def process_late_entries(*args,**kwargs):
                 if lateMin>90 and lateMin<=120:
                     lates["2"] += 1
                 if lateMin>=30:
-                    targetsMsg = f"{targetsMsg}<br> {att.name}:   <b>{att.in_time}</b>    ({lateMin}min)<br>" 
+                    targetsMsg = f"{targetsMsg}<br>{att.name}: <b>{att.in_time}</b> ({lateMin}min)<br>" 
                 
                 if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
                     content = dformMsg.replace("<MONTH>",f"{start.strftime('%B/%Y')} | Total {total_min} minutes").replace("<ATTENDANCES>",targetsMsg)
-                    create_disciplinary_form(employee_name = employee.employee_name,supervisor=employee.reports_to, employee=employee.name,content=content)
+                    create_disciplinary_form(id=f"{start.strftime('%B/%Y')}-{employee.name}",employee_name = employee.employee_name,supervisor=employee.reports_to, employee=employee.name,content=content)
                     stop = True
                     break
             if stop:
                 break
        
                     
-def create_disciplinary_form(employee_name,supervisor,employee,content):
+def create_disciplinary_form(id,employee_name,supervisor,employee,content):
     logging.warning(f"create_disciplinary_form for {employee_name}: {content}")
     
+    if frappe.db.exists("Disciplinary Form",id):
+        logging.warning(f"create_disciplinary_form aready exists {employee_name}: {content}")
+        return
+        
     dform = frappe.get_doc(
 		{
 			"doctype": "Disciplinary Form",
+            "name":id,
 			"employee": employee,
 			"disciplinary_form": content,
             "custom_supervisor":supervisor,
@@ -648,7 +653,7 @@ def create_disciplinary_form(employee_name,supervisor,employee,content):
 		}
 	)
     
-    dform.insert()
+    dform.insert(ignore_if_duplicate=True)
     frappe.db.commit()
     send_email_notification(supervisor,employee,employee_name, content,dform.name)
             
