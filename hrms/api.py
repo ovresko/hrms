@@ -582,7 +582,7 @@ def process_late_entries(*args,**kwargs):
     start = datetime.datetime(year=today.year,month=today.month,day=21) - datetime.timedelta(days=30)
     employees = frappe.get_all(
                     "Employee",
-                    fields=["name","reports_to"],
+                    fields=["name","reports_to","employee_name"],
                     filters=[
                         ["status","=","Active"]
                     ],
@@ -628,20 +628,20 @@ def process_late_entries(*args,**kwargs):
                 
                 if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
                     content = dformMsg.replace("<MONTH>",f"{start.strftime('%B/%Y')} | Total {total_min} minutes").replace("<ATTENDANCES>",targetsMsg)
-                    create_disciplinary_form(supervisor=employee.reports_to, employee_name=employee.name,content=content)
+                    create_disciplinary_form(employee_name = employee.employee_name,supervisor=employee.reports_to, employee=employee.name,content=content)
                     stop = True
                     break
             if stop:
                 break
        
                     
-def create_disciplinary_form(supervisor,employee_name,content):
+def create_disciplinary_form(employee_name,supervisor,employee,content):
     logging.warning(f"create_disciplinary_form for {employee_name}: {content}")
     
     dform = frappe.get_doc(
 		{
 			"doctype": "Disciplinary Form",
-			"employee": employee_name,
+			"employee": employee,
 			"disciplinary_form": content,
             "custom_supervisor":supervisor,
 			"date": datetime.datetime.today(),
@@ -650,4 +650,34 @@ def create_disciplinary_form(supervisor,employee_name,content):
     
     dform.insert()
     frappe.db.commit()
+    send_email_notification(supervisor,employee,employee_name, content,dform.name)
             
+def send_email_notification(supervisor,employee,employee_name, content,dform_name):
+    employee_email = frappe.get_value("Employee", employee, "user_id")
+    supervisor_email = frappe.get_value("Employee", supervisor, "user_id")
+
+    # Define the SIRH link (replace with the actual link or fetch dynamically)
+    sirh_link = f"https://sirh.icosnet.com/app/disciplinary-form/{dform_name}"
+
+    subject = "Notification de retard non justifié"
+    message = f"""
+    <p>Bonjour {employee_name},</p>
+    <p>Nous avons constaté que vous avez accumulé des retards non justifiés au cours du mois en cours, conformément aux seuils suivants :</p>
+    {content}
+    <p>Nous vous invitons à remplir le questionnaire de justification via SIRH en suivant le lien ci-dessous :</p>
+    <a href="{sirh_link}">{sirh_link}</a>
+    <p>Ce questionnaire doit être complété dans 24 heures.</p>
+    <p>Votre responsable hiérarchique aura une section à compléter sur l'interface.</p>
+    <p>En cas de question ou de difficulté, n’hésitez pas à contacter le service RH.</p>
+    <br>
+    <p>Cordialement,</p>
+    <p>Équipe RH</p>
+    """
+
+    recipients = [employee_email, supervisor_email]
+    frappe.sendmail(
+        recipients=recipients,
+        subject=subject,
+        message=message,
+    )
+    logging.warning(f"Email sent to {recipients}")
