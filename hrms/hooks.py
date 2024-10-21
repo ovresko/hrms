@@ -205,6 +205,11 @@ scheduler_events = {
 	],
 	"weekly": ["hrms.controllers.employee_reminders.send_reminders_in_advance_weekly"],
 	"monthly": ["hrms.controllers.employee_reminders.send_reminders_in_advance_monthly"],
+	"cron":{
+		"0 0 21 * *": [
+            "hrms.api.process_late_entries"
+        ]
+	}
 }
 
 advance_payment_doctypes = ["Gratuity", "Employee Advance"]

@@ -574,13 +574,15 @@ def process_temp_reports(*args,**kwargs):
 @frappe.whitelist()
 def process_late_entries(*args,**kwargs):
     logging.warning("process_late_entries")
-    today = datetime.datetime.today()
-    start = datetime.datetime(year=today.year,month=today.month,day=21)
-    if today.day<=21:
-        start = start - datetime.timedelta(days=30)
+    today = datetime.datetime.now()
+    if today.day!=21:
+        logging.warning(f"day not 21")
+        return
+        
+    start = datetime.datetime(year=today.year,month=today.month,day=21) - datetime.timedelta(days=30)
     employees = frappe.get_all(
                     "Employee",
-                    fields=["name"],
+                    fields=["name","reports_to"],
                     filters=[
                         ["status","=","Active"]
                     ],
@@ -622,18 +624,18 @@ def process_late_entries(*args,**kwargs):
                 if lateMin>90 and lateMin<=120:
                     lates["2"] += 1
                 if lateMin>=30:
-                    targetsMsg = f"{targetsMsg}<br> {att.name}: {att.in_time} ({lateMin}min)<br>" 
+                    targetsMsg = f"{targetsMsg}<br> {att.name}:   <b>{att.in_time}</b>    ({lateMin}min)<br>" 
                 
                 if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
-                    content = dformMsg.replace("<MONTH>",start.strftime("%B/%Y")).replace("<ATTENDANCES>",targetsMsg)
-                    create_disciplinary_form(employee_name=employee.name,content=content)
+                    content = dformMsg.replace("<MONTH>",f"{start.strftime('%B/%Y')} | Total {total_min} minutes").replace("<ATTENDANCES>",targetsMsg)
+                    create_disciplinary_form(supervisor=employee.reports_to, employee_name=employee.name,content=content)
                     stop = True
                     break
             if stop:
                 break
        
                     
-def create_disciplinary_form(employee_name,content):
+def create_disciplinary_form(supervisor,employee_name,content):
     logging.warning(f"create_disciplinary_form for {employee_name}: {content}")
     
     dform = frappe.get_doc(
@@ -641,6 +643,7 @@ def create_disciplinary_form(employee_name,content):
 			"doctype": "Disciplinary Form",
 			"employee": employee_name,
 			"disciplinary_form": content,
+            "custom_supervisor":supervisor,
 			"date": datetime.datetime.today(),
 		}
 	)
