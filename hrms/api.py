@@ -594,7 +594,7 @@ Suite aux retards non justifiés au cours du mois <MONTH>
 <ATTENDANCES>
     """
     for employee in employees:
-        attendances = frappe.get_all("Attendance",filters={"attendance_date":[">=",start],"employee":employee.name},fields=["name","shift","in_time","attendance_date"])
+        attendances = frappe.get_all("Attendance",filters={"attendance_date":[">=",start],"employee":employee.name,"status":["in",["Present","Half Day"]]},fields=["name","shift","in_time","attendance_date"])
         shifts = list(set([a.shift for a in attendances if a.shift]))
         lates = {
             "1":0,
