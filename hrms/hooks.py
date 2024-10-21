@@ -190,7 +190,7 @@ scheduler_events = {
 	"hourly_long": [
 		"hrms.api.process_shift_scheduler",
 		"hrms.hr.doctype.shift_type.shift_type.process_auto_attendance_for_all_shifts",
-		"hrms.api.process_temp_reports",
+		# "hrms.api.process_temp_reports",
 	],
 	"daily": [
 		"hrms.controllers.employee_reminders.send_birthday_reminders",
