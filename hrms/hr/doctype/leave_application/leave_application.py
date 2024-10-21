@@ -554,7 +554,7 @@ class LeaveApplication(Document):
 					and status = 'Present' and docstatus = 1""",
 			(self.employee, self.from_date, self.to_date),
 		)
-		if attendance:
+		if attendance and self.status not in ["Rejected","Cancelled"]:
 			frappe.throw(
 				_("Attendance for employee {0} is already marked for this day").format(self.employee),
 				AttendanceAlreadyMarkedError,
