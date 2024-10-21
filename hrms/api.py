@@ -587,11 +587,11 @@ def process_late_entries(*args,**kwargs):
                 )
     
     dformMsg = f""" 
-Suite aux retards non justifiés au cours du mois <MONTH>
+<p>Suite aux retards non justifiés au cours du mois <MONTH></p>
+<br>
 
-
-- Dates et heures des retards:
-<ATTENDANCES>
+<p>- Dates et heures des retards:</p>
+<ATTENDANCES><br>
     """
     for employee in employees:
         attendances = frappe.get_all("Attendance",filters={"attendance_date":[">=",start],"employee":employee.name,"status":["in",["Present","Half Day"]]},fields=["name","shift","in_time","attendance_date"])
@@ -622,7 +622,7 @@ Suite aux retards non justifiés au cours du mois <MONTH>
                 if lateMin>90 and lateMin<=120:
                     lates["2"] += 1
                 if lateMin>=30:
-                    targetsMsg = f"{targetsMsg}\n {att.name}: {att.in_time} ({lateMin}min)" 
+                    targetsMsg = f"{targetsMsg}<br> {att.name}: {att.in_time} ({lateMin}min)<br>" 
                 
                 if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
                     content = dformMsg.replace("<MONTH>",start.strftime("%B/%Y")).replace("<ATTENDANCES>",targetsMsg)
