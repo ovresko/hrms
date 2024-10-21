@@ -573,6 +573,7 @@ def process_temp_reports(*args,**kwargs):
 
 @frappe.whitelist()
 def process_late_entries(*args,**kwargs):
+    logging.warning("process_late_entries")
     today = datetime.datetime.today()
     start = datetime.datetime(year=today.year,month=today.month,day=21)
     if today.day<=20:
@@ -600,14 +601,14 @@ Suite aux retards non justifiés au cours du mois <MONTH>
             "1.5":0,
             "2":0
         }
-        logging.info(f"late for {employee.name} attendances: {len(attendances)} shifts {shifts}")
+        logging.warning(f"late for {employee.name} attendances: {len(attendances)} shifts {shifts}")
         total_min = 0
         stop = False
         for shift_name in shifts:
             start_time = frappe.get_value("Shift Type", shift_name,"start_time")
             #sStart = start_time + datetime.timedelta(minutes=120) 
             shift_attendances = [a for a in attendances if a.shift==shift_name]
-            logging.info(f"shift_attendances for {employee.name}: {len(shift_attendances)} shift_name {shift_name}")
+            logging.warning(f"shift_attendances for {employee.name}: {len(shift_attendances)} shift_name {shift_name}")
             
             targetsMsg = ""
             for att in shift_attendances:
@@ -633,6 +634,8 @@ Suite aux retards non justifiés au cours du mois <MONTH>
        
                     
 def create_disciplinary_form(employee_name,content):
+    logging.warning(f"create_disciplinary_form for {employee_name}: {content}")
+    
     dform = frappe.get_doc(
 		{
 			"doctype": "Disciplinary Form",
