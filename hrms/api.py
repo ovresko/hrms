@@ -607,13 +607,13 @@ Suite aux retards non justifiés au cours du mois <MONTH>
         for shift_name in shifts:
             start_time = frappe.get_value("Shift Type", shift_name,"start_time")
             #sStart = start_time + datetime.timedelta(minutes=120) 
-            shift_attendances = [a for a in attendances if a.shift==shift_name]
+            shift_attendances = [a for a in attendances if a.shift==shift_name and a.in_time]
             logging.warning(f"shift_attendances for {employee.name}: {len(shift_attendances)} shift_name {shift_name}")
             
             targetsMsg = ""
             for att in shift_attendances:
                 attstart_time = dt.combine(att.attendance_date, dt.min.time()) + start_time
-                lateMin = (att.in_time - attstart_time).total_seconds() / 60
+                lateMin = int((att.in_time - attstart_time).total_seconds() / 60)
                 total_min += lateMin
                 if lateMin>=30 and lateMin<=60:
                     lates["1"] += 1
@@ -641,9 +641,10 @@ def create_disciplinary_form(employee_name,content):
 			"doctype": "Disciplinary Form",
 			"employee": employee_name,
 			"disciplinary_form": content,
-			"start_date": datetime.datetime.today(),
+			"date": datetime.datetime.today(),
 		}
 	)
     
     dform.insert()
+    frappe.db.commit()
             
