@@ -625,7 +625,7 @@ Suite aux retards non justifiés au cours du mois <MONTH>
                     targetsMsg = f"{targetsMsg}\n {att.name}: {att.in_time} ({lateMin}min)" 
                 
                 if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
-                    content = dformMsg.replace("<MONTH>",start.month).replace("<ATTENDANCES>",targetsMsg)
+                    content = dformMsg.replace("<MONTH>",start.strftime("%B/%Y")).replace("<ATTENDANCES>",targetsMsg)
                     create_disciplinary_form(employee_name=employee.name,content=content)
                     stop = True
                     break
