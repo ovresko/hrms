@@ -576,8 +576,8 @@ def process_late_entries(*args,**kwargs):
     logging.warning("process_late_entries")
     today = datetime.datetime.today()
     start = datetime.datetime(year=today.year,month=today.month,day=21)
-    if today.day<=20:
-        start = start + datetime.timedelta(days=30)
+    if today.day<=21:
+        start = start - datetime.timedelta(days=30)
     employees = frappe.get_all(
                     "Employee",
                     fields=["name"],
