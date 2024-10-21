@@ -612,7 +612,7 @@ Suite aux retards non justifiés au cours du mois <MONTH>
             
             targetsMsg = ""
             for att in shift_attendances:
-                attstart_time = datetime.combine(att.attendance_date, datetime.min.time()) + start_time
+                attstart_time = dt.combine(att.attendance_date, dt.min.time()) + start_time
                 lateMin = (att.in_time - attstart_time).total_seconds / 60
                 total_min += lateMin
                 if lateMin>=30 and lateMin<=60:
