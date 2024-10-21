@@ -569,3 +569,78 @@ def process_temp_reports(*args,**kwargs):
                 
         except Exception as e:
             logging.exception(e)
+            
+
+@frappe.whitelist()
+def process_late_entries(*args,**kwargs):
+    today = datetime.datetime.today()
+    start = datetime.datetime(year=today.year,month=today.month,day=21)
+    if today.day<=20:
+        start = start + datetime.timedelta(days=30)
+    employees = frappe.get_all(
+                    "Employee",
+                    fields=["name"],
+                    filters=[
+                        ["status","=","Active"]
+                    ],
+                )
+    
+    dformMsg = f""" 
+Suite aux retards non justifiés au cours du mois <MONTH>
+
+
+- Dates et heures des retards:
+<ATTENDANCES>
+    """
+    for employee in employees:
+        attendances = frappe.get_all("Attendance",filters={"attendance_date":[">=",start],"employee":employee.name})
+        shifts = list(set([a.shift for a in attendances if a.shift]))
+        lates = {
+            "1":0,
+            "1.5":0,
+            "2":0
+        }
+        logging.info(f"late for {employee.name} attendances: {len(attendances)} shifts {shifts}")
+        total_min = 0
+        stop = False
+        for shift_name in shifts:
+            start_time = frappe.get_value("Shift Type", shift_name,"start_time")
+            #sStart = start_time + datetime.timedelta(minutes=120) 
+            shift_attendances = [a for a in attendances if a.shift==shift_name]
+            logging.info(f"shift_attendances for {employee.name}: {len(shift_attendances)} shift_name {shift_name}")
+            
+            targetsMsg = ""
+            for att in shift_attendances:
+                attstart_time = datetime.combine(att.attendance_date, datetime.min.time()) + start_time
+                lateMin = (att.in_time - attstart_time).total_seconds / 60
+                total_min += lateMin
+                if lateMin>=30 and lateMin<=60:
+                    lates["1"] += 1
+                if lateMin>60 and lateMin<=90:
+                    lates["1.5"] += 1
+                if lateMin>90 and lateMin<=120:
+                    lates["2"] += 1
+                if lateMin>=30:
+                    targetsMsg = f"{targetsMsg}\n {att.name}: {att.in_time} ({lateMin}min)" 
+                
+                if total_min>330 or lates["1"]>=5 or lates["1.5"]>=3 or lates["2"]>=2:
+                    content = dformMsg.replace("<MONTH>",start.month).replace("<ATTENDANCES>",targetsMsg)
+                    create_disciplinary_form(employee_name=employee.name,content=content)
+                    stop = True
+                    break
+            if stop:
+                break
+       
+                    
+def create_disciplinary_form(employee_name,content):
+    dform = frappe.get_doc(
+		{
+			"doctype": "Disciplinary Form",
+			"employee": employee_name,
+			"disciplinary_form": content,
+			"start_date": datetime.datetime.today(),
+		}
+	)
+    
+    dform.insert()
+            
