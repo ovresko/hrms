@@ -572,6 +572,22 @@ def process_temp_reports(*args,**kwargs):
             
 
 @frappe.whitelist()
+def get_late_hours(employee,start_date,end_date):
+    attendances = frappe.get_all("Attendance",filters={"attendance_date":("between",[start_date,end_date]),"employee":employee,"status":["in",["Present","Half Day"]],"late_entry":1},fields=["name","shift","in_time","attendance_date"])
+    shifts = list(set([a.shift for a in attendances if a.shift]))
+    
+    total_min = 0
+
+    for shift_name in shifts:
+        start_time = frappe.db.get_value("Shift Type", shift_name,"start_time")
+        shift_attendances = [a for a in attendances if a.shift == shift_name and a.in_time]
+        for att in shift_attendances:
+            lateMin = int((att.in_time.time() - start_time).total_seconds() / 60)
+            total_min += lateMin
+            
+    return total_min
+
+@frappe.whitelist()
 def process_late_entries(*args,**kwargs):
     logging.warning("process_late_entries")
     today = datetime.datetime.now()
@@ -584,7 +600,8 @@ def process_late_entries(*args,**kwargs):
                     "Employee",
                     fields=["name","reports_to","employee_name"],
                     filters=[
-                        ["status","=","Active"]
+                        ["status","=","Active"],
+                        ["custom_ignore_disciplinary_form","!=",True]
                     ],
                 )
     
@@ -654,12 +671,24 @@ def create_disciplinary_form(id,employee_name,supervisor,employee,content):
 	)
     
     dform.insert(ignore_if_duplicate=True)
+    
     frappe.db.commit()
     send_email_notification(supervisor,employee,employee_name, content,dform.name)
             
 def send_email_notification(supervisor,employee,employee_name, content,dform_name):
     employee_email = frappe.get_value("Employee", employee, "user_id")
     supervisor_email = frappe.get_value("Employee", supervisor, "user_id")
+    frappe.share.add(
+        doctype="Disciplinary Form",
+        name=dform_name,
+        user=supervisor,
+        read=1,
+        write=1,
+        share=1,
+        submit=0,  # Add submit permission
+        delete=0   # Add delete permission
+    )
+    frappe.db.commit()
 
     # Define the SIRH link (replace with the actual link or fetch dynamically)
     sirh_link = f"https://sirh.icosnet.com/app/disciplinary-form/{dform_name}"
