@@ -3,8 +3,7 @@
 
 
 import unicodedata
-from datetime import date
-
+from datetime import date,datetime,timedelta
 import frappe
 from frappe import _, msgprint
 from frappe.model.naming import make_autoname
@@ -173,10 +172,11 @@ class SalarySlip(TransactionBase):
 			start_time = frappe.db.get_value("Shift Type", shift_name,"start_time")
 			shift_attendances = [a for a in attendances if a.shift == shift_name and a.in_time]
 			for att in shift_attendances:
-				lateMin = int((att.in_time.time() - start_time).total_seconds() / 60)
+				shift_start = datetime.combine(att.in_time.date(), (datetime.min + start_time).time())
+				lateMin = max(0, int((att.in_time - shift_start).total_seconds() / 60))
 				total_min += lateMin
 				
-		self.total_late_hours = total_min
+		self.total_late_hours = total_min/60
 
 	def set_net_total_in_words(self):
 		doc_currency = self.currency
