@@ -133,7 +133,8 @@ class SalarySlip(TransactionBase):
 		validate_active_employee(self.employee)
 		self.validate_dates()
 		self.check_existing()
-
+		self.get_late_hours()
+  
 		if not self.salary_slip_based_on_timesheet:
 			self.get_date_details()
 
@@ -161,6 +162,21 @@ class SalarySlip(TransactionBase):
 					),
 					alert=True,
 				)
+
+	def get_late_hours(self):
+		attendances = frappe.get_all("Attendance",filters={"attendance_date":("between",[self.start_date,self.end_date]),"employee":self.employee,"status":["in",["Present","Half Day"]],"late_entry":1},fields=["name","shift","in_time","attendance_date"])
+		shifts = list(set([a.shift for a in attendances if a.shift]))
+
+		total_min = 0
+
+		for shift_name in shifts:
+			start_time = frappe.db.get_value("Shift Type", shift_name,"start_time")
+			shift_attendances = [a for a in attendances if a.shift == shift_name and a.in_time]
+			for att in shift_attendances:
+				lateMin = int((att.in_time.time() - start_time).total_seconds() / 60)
+				total_min += lateMin
+				
+		self.total_late_hours = total_min
 
 	def set_net_total_in_words(self):
 		doc_currency = self.currency
