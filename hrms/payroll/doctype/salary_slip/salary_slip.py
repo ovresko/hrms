@@ -167,13 +167,14 @@ class SalarySlip(TransactionBase):
 		shifts = list(set([a.shift for a in attendances if a.shift]))
 
 		total_min = 0
+		#grace = timedelta(minutes=30)
 
 		for shift_name in shifts:
 			start_time = frappe.db.get_value("Shift Type", shift_name,"start_time")
 			shift_attendances = [a for a in attendances if a.shift == shift_name and a.in_time]
 			for att in shift_attendances:
 				shift_start = datetime.combine(att.in_time.date(), (datetime.min + start_time).time())
-				lateMin = max(0, int((att.in_time - shift_start).total_seconds() / 60))
+				lateMin = max(0, int((att.in_time - shift_start).total_seconds() / 60) - 30)
 				total_min += lateMin
 				
 		self.total_late_hours = total_min/60
@@ -2206,6 +2207,18 @@ def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=Non
 
 		tax_amount += tax_amount * flt(d.percent) / 100
 
+	if tax_slab.tax_allowance>0:
+		tax_allowance = tax_amount * flt(tax_slab.tax_allowance) / 100
+		if tax_allowance > tax_slab.tax_allowance_max:
+			tax_allowance = tax_slab.tax_allowance_max
+		if tax_allowance < tax_slab.tax_allowance_min:
+			tax_allowance = tax_slab.tax_allowance_min
+		
+		tax_amount -= tax_allowance
+		if tax_slab.second_allowance_eval and annual_taxable_earning>=tax_slab.second_allowance_from and annual_taxable_earning<=tax_slab.second_allowance_to:
+			eval_locals["REDTAX"] = tax_amount
+			tax_amount = frappe.safe_eval(tax_slab.tax_allowance_eval, eval_globals, eval_locals)
+		
 	return tax_amount
 
 
