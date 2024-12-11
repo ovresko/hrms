@@ -90,8 +90,12 @@ class LeaveApplication(Document):
 		if self.leave_type == "Congé annuel":
 			fromd = frappe.utils.getdate(self.from_date)
 			tod = frappe.utils.getdate(self.to_date)
-			from_date = dt(year=fromd.year-1,month=7,day=1)
-			to_date = dt(year=fromd.year,month=6,day=30)
+			if fromd.month>=7:
+				from_date = dt(year=fromd.year,month=7,day=1)
+				to_date = dt(year=fromd.year+1,month=6,day=30)
+			else:
+				from_date = dt(year=fromd.year-1,month=7,day=1)
+				to_date = dt(year=fromd.year,month=6,day=30)
 
 			new_allocation, expired_leaves, carry_forwarded_leaves = get_allocated_and_expired_leaves(from_date, to_date, self.employee, "Congé annuel")
 			leaves_taken = (get_leaves_for_period(self.employee, "Congé annuel", from_date, to_date) * -1) or 0
