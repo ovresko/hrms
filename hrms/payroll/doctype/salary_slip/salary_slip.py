@@ -2227,10 +2227,10 @@ def calculate_tax_by_tax_slab(annual_taxable_earning, tax_slab, eval_globals=Non
 		tax_amount += tax_amount * flt(d.percent) / 100
 
 	if tax_slab.tax_allowance>0:
-		tax_allowance = tax_amount * flt(tax_slab.tax_allowance) / 100
-		if tax_allowance > tax_slab.tax_allowance_max:
+		tax_allowance = tax_amount * (flt(tax_slab.tax_allowance) / 100)
+		if tax_allowance and tax_allowance > tax_slab.tax_allowance_max:
 			tax_allowance = tax_slab.tax_allowance_max
-		if tax_allowance < tax_slab.tax_allowance_min:
+		if tax_allowance and tax_allowance < tax_slab.tax_allowance_min:
 			tax_allowance = tax_slab.tax_allowance_min
 		
 		tax_amount -= tax_allowance
