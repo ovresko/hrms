@@ -105,7 +105,8 @@
   "bank_name",
   "bank_account_no",
   "leave_details_section",
-  "leave_details"
+  "leave_details",
+  "total_late_hours"
  ],
  "fields": [
   {
@@ -768,13 +769,20 @@
    "fieldname": "payment_days_calculation_help",
    "fieldtype": "HTML",
    "label": "Payment Days Calculation Help"
+  },
+  {
+   "fieldname": "total_late_hours",
+   "fieldtype": "Float",
+   "label": "Total Late Hours",
+   "precision": "1",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 9,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-06-11 10:00:16.606996",
+ "modified": "2024-10-27 14:33:12.021889",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Salary Slip",

@@ -81,12 +81,14 @@
    "fetch_from": "employee.employee_name",
    "fieldname": "employee_name",
    "fieldtype": "Read Only",
+   "ignore_user_permissions": 1,
    "label": "Employee Name"
   },
   {
    "fetch_from": "employee.leave_approver",
    "fieldname": "approbateur",
    "fieldtype": "Data",
+   "ignore_user_permissions": 1,
    "label": "Approbateur",
    "options": "Email",
    "read_only": 1
@@ -105,7 +107,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-31 15:51:39.650542",
+ "modified": "2024-10-30 11:09:05.043113",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Exit permit",

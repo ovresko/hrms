@@ -186,7 +186,7 @@
  "icon": "fa fa-bookmark",
  "idx": 1,
  "links": [],
- "modified": "2024-09-08 12:35:33.369263",
+ "modified": "2024-11-11 11:00:23.678840",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Opening",
@@ -209,7 +209,10 @@
    "role": "Guest"
   }
  ],
+ "search_fields": "job_title",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "ASC",
- "states": []
+ "states": [],
+ "title_field": "job_title"
 }

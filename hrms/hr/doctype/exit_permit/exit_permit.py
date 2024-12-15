@@ -4,9 +4,9 @@ from frappe.utils import getdate, nowdate, add_months
 from frappe.model.document import Document
 
 class Exitpermit(Document):
-    def before_insert(self):
+    def validate(self):
         # Get today's date
-        today = getdate(nowdate())
+        today = getdate(self.exit_date)
         employee = self.employee
         if self.type_exit=="Sortie":
 
@@ -29,8 +29,10 @@ class Exitpermit(Document):
             permits = frappe.get_all('Exit permit', filters={
                 'employee': employee,
                 'type_exit':"Sortie",
+                'name':['!=',self.name],
+                'workflow_state': ["!=","Rejected"],
                 'exit_date': ['between', [start_date, end_date]]
-            })
+            },fields=["name"])
             count = len(permits)+1
 
             # Step 2: If the employee has fewer than max_exit_permit_count permits, calculate the total requested time in hours
