@@ -48,6 +48,9 @@ class SalaryStructureAssignment(Document):
 			self.set_payroll_cost_centers()
 
 		self.validate_cost_center_distribution()
+		if self.custom_salary_group:
+			base = frappe.get_value("Salary Group",self.custom_salary_group,"base")
+			self.base = base
 
 	def validate_dates(self):
 		joining_date, relieving_date = frappe.db.get_value(
