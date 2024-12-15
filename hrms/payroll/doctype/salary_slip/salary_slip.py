@@ -1118,7 +1118,18 @@ class SalarySlip(TransactionBase):
 				)
 			)
 
-		salary_variable = salary_structure_assignment["custom_salary_variable"]
+		salary_variable = frappe.get_value(
+			"Salary Structure Assignment",
+			{
+				"employee": self.employee,
+				"salary_structure": self.salary_structure,
+				"from_date": ("<=", date_to_validate),
+				"docstatus": 1,
+			},
+			"custom_salary_variable",
+			order_by="from_date desc",
+		)
+		
 		if salary_variable:
 			for sv in salary_variable:
 				sv_name = sv["salary_component"]
