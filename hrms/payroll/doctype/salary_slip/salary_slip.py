@@ -1121,7 +1121,10 @@ class SalarySlip(TransactionBase):
 		salary_variable = salary_structure_assignment["custom_salary_variable"]
 		if salary_variable:
 			for sv in salary_variable:
-				data[sv["salary_component"]] = sv["rate"]
+				sv_name = sv["salary_component"]
+				sv_name = sv_name.replace(" ","_").lower()
+				data[sv_name] = sv["rate"]
+    
 		data.update(salary_structure_assignment)
 		data.update(self.as_dict())
 		data.update(employee)

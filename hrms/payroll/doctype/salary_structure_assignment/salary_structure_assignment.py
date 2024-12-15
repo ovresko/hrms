@@ -50,6 +50,9 @@ class SalaryStructureAssignment(Document):
 		self.validate_cost_center_distribution()
 		if self.custom_salary_group:
 			base = frappe.get_value("Salary Group",self.custom_salary_group,"base")
+			salary_variable = frappe.get_value("Salary Group",self.custom_salary_group,"salary_variable")
+			if not len(self.custom_salary_variable):
+				self.custom_salary_variable = salary_variable
 			self.base = base
 
 	def validate_dates(self):
