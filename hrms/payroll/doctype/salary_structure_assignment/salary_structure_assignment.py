@@ -52,7 +52,7 @@ class SalaryStructureAssignment(Document):
 			salary_group = frappe.get_doc("Salary Group",self.custom_salary_group) #,"salary_variable"
 			if not len(self.custom_salary_variable):
 				for ss in salary_group.salary_variable:
-					self.append("custom_salary_variable",{"salary_component":ss["salary_component"],"rate":ss["rate"]})
+					self.append("custom_salary_variable",{"salary_component":ss.salary_component,"rate":ss.rate})
 			self.base = salary_group.base
 
 	def validate_dates(self):
