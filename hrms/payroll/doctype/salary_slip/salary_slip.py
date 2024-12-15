@@ -1125,7 +1125,12 @@ class SalarySlip(TransactionBase):
 			},
 			fields = ["*"]
 		)
-		
+  
+		for k in ['earnings','deductions']:
+			for c in self._salary_structure_doc.get(k):
+				sv_name = c.salary_component.replace(" ","_").lower()
+				data[sv_name] = 0
+	
 		if salary_variable:
 			for sv in salary_variable:
 				sv_name = sv["salary_component"]
