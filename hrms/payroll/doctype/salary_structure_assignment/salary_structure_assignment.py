@@ -49,11 +49,10 @@ class SalaryStructureAssignment(Document):
 
 		self.validate_cost_center_distribution()
 		if self.custom_salary_group:
-			base = frappe.get_value("Salary Group",self.custom_salary_group,"base")
-			salary_variable = frappe.get_value("Salary Group",self.custom_salary_group,"salary_variable")
+			salary_group = frappe.get_doc("Salary Group",self.custom_salary_group) #,"salary_variable"
 			if not len(self.custom_salary_variable):
-				self.custom_salary_variable = salary_variable
-			self.base = base
+				self.custom_salary_variable = salary_group.salary_variable
+			self.base = salary_group.base
 
 	def validate_dates(self):
 		joining_date, relieving_date = frappe.db.get_value(
