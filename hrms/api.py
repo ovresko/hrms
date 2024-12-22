@@ -591,8 +591,8 @@ def get_late_hours(employee,start_date,end_date):
 def process_late_entries(*args,**kwargs):
     logging.warning("process_late_entries")
     today = datetime.datetime.now()
-    if today.day!=22:
-        logging.warning(f"day not 22")
+    if today.day!=21:
+        logging.warning(f"day not 21")
         return
         
     start = datetime.datetime(year=today.year,month=today.month,day=20) - datetime.timedelta(days=30)
