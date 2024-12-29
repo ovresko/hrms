@@ -106,6 +106,14 @@ class LeaveApplication(Document):
 			self.reste = self.total_droits - self.total_leave_days
 
 
+		if self.reste<0:
+			frappe.throw("Vous n'avez pas assez de jours de congé pour accepter cette demande.")
+			
+		# validate interim
+		if self.total_leave_days>2 and not self.interim:
+			frappe.throw("Champs interimaire obligatoire")
+
+
 	def on_update(self):
 		if self.status == "Open" and self.docstatus < 1:
 			# notify leave approver about creation
