@@ -105,9 +105,13 @@ class LeaveApplication(Document):
 			self.total_droits = self.reliquat+self.exercice
 			self.reste = self.total_droits - self.total_leave_days
 
+		custom_allow_negative_leaves = frappe.db.get_value("Employee",self.employee,"custom_allow_negative_leaves")
 
 		if self.reste<0:
-			frappe.throw("Vous n'avez pas assez de jours de congé pour accepter cette demande.")
+			if custom_allow_negative_leaves:
+				frappe.msgprint("Jours de congé insuffisants, l'employé est autorisé à prendre un congé sans reliquat.")
+			else:
+				frappe.throw("Vous n'avez pas assez de jours de congé pour accepter cette demande.")
 			
 		# validate interim
 		if self.total_leave_days>2 and not self.interim:
