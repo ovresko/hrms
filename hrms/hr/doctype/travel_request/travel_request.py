@@ -26,6 +26,13 @@ class TravelRequest(Document):
 		# Register attendance for remote work during the travel period
 		self.register_attendance_for_remote_work()
 
+	def on_cancel(self):
+		# cancel attendances that have custom_travel_request=self.name
+		attendances = frappe.get_all("Attendance", filters={"custom_travel_request": self.name, "docstatus": 1})
+		for attendance in attendances:
+			attendance_doc = frappe.get_doc("Attendance", attendance.name)
+			attendance_doc.cancel()
+
 	def register_attendance_for_remote_work(self):
 		if not self.itinerary:
 			frappe.throw(_("Itinerary is missing"))
