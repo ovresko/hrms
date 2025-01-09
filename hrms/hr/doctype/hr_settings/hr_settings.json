@@ -48,7 +48,8 @@
   "column_break_34",
   "exit_questionnaire_notification_template",
   "max_exit_permit_count",
-  "max_exit_permit_hours"
+  "max_exit_permit_hours",
+  "whowiaty_token"
  ],
  "fields": [
   {
@@ -308,13 +309,18 @@
    "fieldname": "max_exit_permit_hours",
    "fieldtype": "Float",
    "label": "Max Exit Permit Hours"
+  },
+  {
+   "fieldname": "whowiaty_token",
+   "fieldtype": "Data",
+   "label": "Whowiaty Token"
   }
  ],
  "icon": "fa fa-cog",
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-06-26 15:20:17.802079",
+ "modified": "2025-01-09 13:10:42.821826",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",
