@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-13 12:11:29.847850",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "signature_assignement_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "signature_assignement_item",
+   "fieldtype": "Table",
+   "label": "Signature Assignement Item",
+   "options": "Signature Assignement Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-01-13 12:11:29.847850",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Signature Assignement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
