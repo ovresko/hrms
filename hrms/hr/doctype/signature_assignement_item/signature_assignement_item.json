@@ -12,7 +12,8 @@
   "submitted",
   "use_qr",
   "hide_name",
-  "hide_date"
+  "hide_date",
+  "hide_sign"
  ],
  "fields": [
   {
@@ -62,12 +63,18 @@
    "fieldname": "hide_date",
    "fieldtype": "Check",
    "label": "Hide Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_sign",
+   "fieldtype": "Check",
+   "label": "Hide Signature"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-15 13:42:29.504609",
+ "modified": "2025-01-15 14:43:31.891954",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Signature Assignement Item",
