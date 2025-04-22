@@ -38,13 +38,13 @@ def mark_employee_leave(
 		frappe.throw("Reason for leave must be specified.")
 
 	employee_list = frappe.get_list(
-		"Employee", fields=["employee", "employee_name"], filters={"status": "Active","name":"999999"}, order_by="employee_name"
+		"Employee", fields=["name", "employee_name"], filters={"status": "Active","name":"999999"}, order_by="employee_name"
 	)
 	for employee in employee_list:
 		attendance = frappe.get_doc(
 			dict(
 				doctype="Leave Application",
-				employee=employee,
+				employee=employee['name'],
 				from_date=start_date,
 				to_date=end_date,
 				leave_type=leave_type,
